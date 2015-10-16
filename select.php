@@ -1,7 +1,7 @@
 <?php
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbpass = '';
+$dbpass = 'eko';
 $conn = mysql_connect($dbhost, $dbuser, $dbpass);
 if(! $conn )
 {
@@ -12,7 +12,7 @@ $sql = 'SELECT title, post,
                location, reg_date
         FROM Posts';
 
-mysql_select_db('testDB');
+mysql_select_db('test');
 $retval = mysql_query( $sql, $conn );
 if(! $retval )
 {
