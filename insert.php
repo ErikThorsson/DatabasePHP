@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO Posts(title, post, location, reg_date)
-VALUES ('test5','test5','22', '2015-10-6 05:54:13')";
+VALUES ('test6','dvahjvsgsd','456', '2015-10-6 05:54:13')";
 
 
 if ($conn->query($sql) === TRUE) {
