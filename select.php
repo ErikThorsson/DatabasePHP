@@ -18,6 +18,12 @@ if(! $retval )
 {
   die('Could not get data: ' . mysql_error());
 }
+
+while($e=mysql_fetch_assoc($ret_val))
+	$output[] = $e;
+
+print(json_encode($output));
+/*
 while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
 {
     echo "Title :{$row['title']}  <br> ".
@@ -25,6 +31,7 @@ while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
          "location: {$row['location']} <br> ".
          "timestamp: {$row['reg_date']} <br> ".
          "--------------------------------<br>";
+         */
 } 
 echo "Fetched data successfully\n";
 $conn->close();
