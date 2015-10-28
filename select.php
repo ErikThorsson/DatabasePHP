@@ -2,17 +2,19 @@
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = 'eko';
-$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+$DB = "RG";
+
+$conn = mysql_connect($dbhost, $dbuser, $dbpass, $DB);
 if(! $conn )
 {
   die('Could not connect: ' . mysql_error());
 }
 
-$sql = 'SELECT title, post, 
-               location, reg_date
+$sql = 'SELECT id, user, title, txt, 
+               lat, longi, ts
         FROM Posts';
 
-mysql_select_db('test');
+mysql_select_db('RG');
 $retval = mysql_query( $sql, $conn );
 
 if(! $retval )

@@ -1,11 +1,15 @@
 
-public class Post {
+public class post {
+	int id;
+	String user;
 	String title;
-	String	post;
-	int location;
+	String	text;
+	int latitude;
+	int longitude;
 	String time_stamp;
 	
-	public Post() {
+	
+	public post() {
 	}
 	
 	public void setTitle(String s) {
