@@ -12,12 +12,9 @@ public class newPost {
 
 	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
 		
-		Calendar calendar = Calendar.getInstance();
-		Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-		String ts = currentTimestamp.toString();
-		
-		String insert = "('eddie' ,'what up', 'nm', '33.8755', '84.3900', " + "'" + ts +"')";  
-		
+		String insert = "('Sam' ,'The MASQUERADE is CRANKING', 'moshing with a bunch of vikings right now!!', '63.566', '56.563')";  
+		String pass = "eko";
+
 			 try {
 				    // open a connection to the site
 				    URL url = new URL("http://45.55.44.240/DatabasePHP/remoteInsert.php");
@@ -27,6 +24,7 @@ public class newPost {
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
 				    ps.print("insert="+insert);
+				    ps.print("&pass="+ pass);
 				 
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();

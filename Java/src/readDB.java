@@ -19,6 +19,7 @@ public class readDB {
 					+ ", " +list.get(i).latitude + ", " +list.get(i).longitude + ", " +list.get(i).time_stamp);
 	}
 
+
 	public static String scrape() throws IOException {
 		InputStream in = new URL( "http://45.55.44.240/DatabasePHP/select.php" ).openStream();
 		String s;
@@ -47,17 +48,13 @@ public class readDB {
 			{
 			po = new post();
 			list.add(po);
-			//System.out.println("made post");
-			}
-			
+			}	
 			
 			while (m.find()) { //loop through every split
-				//System.out.println(m.group(1));
 				counter++;
 			  if(counter == 2)
 			  {
 				  po.id = Integer.parseInt(m.group(1));
-				  //System.out.println(m.group(1));
 			  }
 			  if(counter == 4)
 			  {
@@ -73,11 +70,11 @@ public class readDB {
 			  }
 			  if(counter == 10) 
 			  {
-				  po.latitude = Integer.parseInt(m.group(1));
+				  po.latitude = Double.parseDouble(m.group(1));
 			  }
 			  if(counter == 12) 
 			  {
-				  po.longitude = Integer.parseInt(m.group(1));
+				  po.longitude = Double.parseDouble(m.group(1));
 			  }
 			  if(counter == 14) 
 			  {

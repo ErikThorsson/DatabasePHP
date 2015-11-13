@@ -4,15 +4,11 @@ public class post {
 	String user;
 	String title;
 	String	text;
-	int latitude;
-	int longitude;
+	double latitude;
+	double longitude;
 	String time_stamp;
 	
 	
 	public post() {
-	}
-	
-	public void setTitle(String s) {
-		title = s;
 	}
 }

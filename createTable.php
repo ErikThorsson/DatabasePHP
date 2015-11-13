@@ -12,13 +12,13 @@ if ($conn->connect_error) {
 }
 
 $sql = "CREATE TABLE Posts (
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 user VARCHAR(16) NOT NULL,
 title VARCHAR(30) NOT NULL,
 txt VARCHAR(500) NOT NULL,
-lat INT(7),
-longi INT(7),
-ts TIMESTAMP
+lat FLOAT(8),
+longi FLOAT(8),
+ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 
 if ($conn->query($sql) === TRUE) {

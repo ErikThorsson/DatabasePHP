@@ -2,29 +2,27 @@
 
 $servername = "localhost";
 $username = "root";
-$pass = $_POST['pass'];
-//$pass = "eko";
+$password = "eko";
 $DB = "RG";
 
 // Create connection
-$conn = new mysqli($servername, $username, $pass, $DB);
+$conn = new mysqli($servername, $username, $password, $DB);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$insert=$_POST['insert'];
-$id=$_POST['id'];
-$id = "_".$id;
+$data= "('Fred','foo', '')";
+$hash = md5(insert + "Capsicum annuum");
+$insert = "('Fred','foo', '$hash')";
 
- $sql = "INSERT INTO $id(user, txt)
- VALUES $insert";
+$sql = "INSERT INTO users(user, pass, photo)
+VALUES $insert";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
-exit();  
+exit();  // exit without auto_append_file
 ?>

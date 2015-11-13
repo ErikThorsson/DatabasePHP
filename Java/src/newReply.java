@@ -12,12 +12,9 @@ public class newReply {
 
 	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
 		
-		Calendar calendar = Calendar.getInstance();
-		Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-		String ts = currentTimestamp.toString();
-		
-		String id = "1";
-		String insert = "('bill', 'text', " + "'" + ts +"')";  
+		String pass = "eko";
+		String id = "3";
+		String insert = "('Zeus', 'how dare you!')";  
 		
 			 try {
 				    // open a connection to the site
@@ -28,7 +25,9 @@ public class newReply {
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
 				    ps.print("id="+id);
-				    ps.print("&insert="+insert);
+				    ps.print("&pass="+ pass);
+				    ps.print("&insert="+ insert);
+				    //ps.print("&pass="+pass);
 				 
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();

@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "eko";
+$pass = $_POST['pass'];
 $DB = "RG";
 
 // Create connection
@@ -13,8 +13,7 @@ if ($conn->connect_error) {
 }
 
 $insert=$_POST['insert'];
-
-$sql = "INSERT INTO Posts(user, title, txt, lat, longi, ts)
+$sql = "INSERT INTO Posts(user, title, txt, lat, longi)
 VALUES $insert";
 
 if ($conn->query($sql) === TRUE) {
