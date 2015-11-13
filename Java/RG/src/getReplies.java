@@ -17,13 +17,13 @@ import org.apache.commons.io.IOUtils;
 			ArrayList<reply> list = parse(s);
 			//System.out.println(list.size());
 			for(int i=0; i<list.size(); i++)
-				System.out.println(list.get(i).id + "," + list.get(i).user + ", " +list.get(i).txt + list.get(i).time_stamp);
+				System.out.println(list.get(i).user + ", " +list.get(i).txt + ", " + list.get(i).time_stamp);
 		}
 
 		public static String scrape(String id) throws IOException {
 				 try {
 					    // open a connection to the site
-					    URL url = new URL("http://45.55.44.240/DatabasePHP/selectReplies.php");
+					    URL url = new URL("http://45.55.44.240/DatabasePHP/getReplies.php");
 					    URLConnection con = url.openConnection();
 					    // activate the output
 					    con.setDoOutput(true);

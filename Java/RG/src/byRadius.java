@@ -12,8 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 	public class byRadius {
 		public static void main(String[] args) throws MalformedURLException, IOException{
-			String testerino;
-			String s = scrape("200", "50", "50");
+			String s = scrape("5", "50", "50");
 			ArrayList<post> list = parse(s);
 			for(int i=0; i<list.size(); i++)
 				System.out.println(list.get(i).id + ", " + list.get(i).user + ", " +list.get(i).title + ", " +list.get(i).text 

@@ -14,7 +14,7 @@ public class newReply {
 		
 		String pass = "eko";
 		String id = "4";
-		String insert = "('Dan', 'how dare you!')";  
+		String insert = "('Hubert', 'gimme the money')";  
 		
 			 try {
 				    // open a connection to the site

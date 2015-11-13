@@ -13,8 +13,8 @@ import org.apache.commons.io.IOUtils;
 	public class getUsers {
 		public static void main(String[] args) throws MalformedURLException, IOException{
 			//System.out.println(s);
-			String user = "Harry";
-			String userPass = "Potter";
+			String user = "Freddy";
+			String userPass = "a";
 			String s = scrape(user, userPass);
 			ArrayList<user> list = parse(s);
 			//System.out.println(list.size());
