@@ -10,8 +10,10 @@ if(! $conn )
   die('Could not connect: ' . mysql_error());
 }
 
-$sql = 'SELECT id, user, txt, ts
-        FROM _3';
+$id= "_".doubleval($_POST['dis']); 
+
+$sql = 'SELECT user, txt, ts
+        FROM _4';
 
 mysql_select_db('RG');
 $retval = mysql_query( $sql, $conn );

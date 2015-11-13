@@ -10,16 +10,8 @@ if(! $conn )
   die('Could not connect: ' . mysql_error());
 }
 
-$dis=doubleval($_POST['dis']);
-$myLat=doubleval($_POST['myLat']);
-$myLongi=doubleval($_POST['myLongi']);
-
-
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
-        WHERE ABS(lat - '".$myLat."') < '".$dis."' AND ABS(longi - '".$myLongi."') < '".$dis."'
-        ";
+$sql = 'SELECT user, pass, photo
+        FROM users';
 
 mysql_select_db('RG');
 $retval = mysql_query( $sql, $conn );

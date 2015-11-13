@@ -2,19 +2,24 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "eko";
+$pass = $_POST['pass'];
+//$pass = "eko";
 $DB = "RG";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $DB);
+$conn = new mysqli($servername, $username, $pass, $DB);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$data= "('Fred','foo', '')";
-$hash = md5(insert + "Capsicum annuum");
-$insert = "('Fred','foo', '$hash')";
+$user = $_POST['user'];
+$userPass = $_POST['userPass'];
+
+//$user = "Freddy";
+//$userPass = "a";
+$hash = md5($user + "Capsicum annuum");
+$insert = "('$user','$userPass', '$hash')";
 
 $sql = "INSERT INTO users(user, pass, photo)
 VALUES $insert";

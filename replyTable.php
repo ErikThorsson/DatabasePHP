@@ -4,8 +4,7 @@ $username = "root";
 $password = "eko";
 $DB = "RG";
 
-$id=$_POST['id'];
-$id = "_".$id;
+$id="_".$_POST['id'];
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $DB);
@@ -16,7 +15,6 @@ if ($conn->connect_error) {
 }
 
 $sql = "CREATE TABLE $id (
-id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 user VARCHAR(16) NOT NULL,
 txt VARCHAR(500) NOT NULL,
 ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

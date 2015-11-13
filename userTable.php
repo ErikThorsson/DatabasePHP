@@ -12,11 +12,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$tableName = "users";
-
-$sql = "CREATE TABLE $tableName (
-id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-user VARCHAR(16) NOT NULL,
+$sql = "CREATE TABLE users (
+user VARCHAR(16) NOT NULL PRIMARY KEY,
 pass VARCHAR(16) NOT NULL,
 photo VARCHAR(32) NOT NULL
 )";
