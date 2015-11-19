@@ -13,10 +13,8 @@ if ($conn->connect_error) {
 }
 
 $insert=$_POST['insert'];
-$id=$_POST['id'];
-$id = "_".$id;
 
- $sql = "INSERT INTO $id(user, txt)
+ $sql = "INSERT INTO Replies(post_id,user, txt)
  VALUES $insert";
 
 if ($conn->query($sql) === TRUE) {

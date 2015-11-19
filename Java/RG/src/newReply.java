@@ -13,8 +13,7 @@ public class newReply {
 	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
 		
 		String pass = "eko";
-		String id = "4";
-		String insert = "('Hubert', 'gimme the money')";  
+		String insert = "('4', 'Hubert', 'gimme the money')";  
 		
 			 try {
 				    // open a connection to the site
@@ -24,7 +23,6 @@ public class newReply {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("id="+id);
 				    ps.print("&pass="+ pass);
 				    ps.print("&insert="+ insert);
 				 

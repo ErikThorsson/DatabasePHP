@@ -14,7 +14,6 @@ $id= $_POST['id'];
 
 $sql = "SELECT user, txt, ts
         FROM Replies
-        WHERE post_id = $id
         ";
 
 mysql_select_db('RG');

@@ -12,7 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 	public class getReplies {
 		public static void main(String[] args) throws MalformedURLException, IOException{
-			String s = scrape("4");
+			String s = scrape("5");
 			//System.out.println(s);
 			ArrayList<reply> list = parse(s);
 			//System.out.println(list.size());
