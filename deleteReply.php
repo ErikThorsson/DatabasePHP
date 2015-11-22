@@ -3,7 +3,6 @@
 $servername = "localhost";
 $username = "root";
 $pass = $_POST['pass'];
-//$pass = "eko";
 $DB = "RG";
 
 // Create connection
@@ -13,21 +12,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$user = $_POST['user'];
-$userPass = $_POST['userPass'];
+$delete=$_POST['delete'];
+$pid=$_POST['pid'];
 
-//$user = "Freddy";
-//$userPass = "a";
-$hash = md5($user + "Capsicum annuum");
-$insert = "('$user','$userPass', '$hash')";
-
-$sql = "INSERT INTO USERS(user, pass, photo)
-VALUES $insert";
+$sql = "DELETE FROM Replies
+WHERE $delete = id AND post_id = $pid
+";
 
 if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
+    echo "Delete successful";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-exit();  // exit without auto_append_file
-?>
+exit();  

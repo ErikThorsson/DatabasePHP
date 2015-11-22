@@ -13,6 +13,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "CREATE TABLE Replies (
+id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 post_id INT(8) NOT NULL,
 user VARCHAR(16) NOT NULL,
 txt VARCHAR(500) NOT NULL,

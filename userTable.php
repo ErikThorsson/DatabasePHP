@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "CREATE TABLE users (
+$sql = "CREATE TABLE USERS (
 user VARCHAR(16) NOT NULL PRIMARY KEY,
 pass VARCHAR(16) NOT NULL,
 photo VARCHAR(32) NOT NULL

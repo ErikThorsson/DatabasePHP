@@ -13,7 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//$insert = "('Frank' ,'The MASQUERADE is CRANKING', 'moshing with a bunch of vikings right now!!', '63.566', '56.563')";  
 $insert=$_POST['insert'];
 
 $sql = "INSERT INTO Posts(user, title, txt, lat, longi)

@@ -4,7 +4,7 @@ $dbuser = 'root';
 $dbpass = 'eko';
 $DB = "RG";
 
-$conn = mysql_connect($dbhost, $dbuser, $dbpass, $DB);
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $DB);
 if(! $conn )
 {
   die('Could not connect: ' . mysql_error());
@@ -18,16 +18,11 @@ $sql = "SELECT user, pass, photo
         WHERE '".$user."' like user AND '".$userPass."' like pass
         ";
 
-mysql_select_db('RG');
-$retval = mysql_query( $sql, $conn );
-
-if(! $retval )
+ $result = $conn->query($sql);
+if ($result->num_rows > 0) 
 {
-  die('Could not get data: ' . mysql_error());
+echo true;
 }
+exit();
 
-while($e=mysql_fetch_assoc($retval))
-	$output[] = $e;
-
-print(json_encode($output));
 ?> 

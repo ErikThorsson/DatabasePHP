@@ -18,7 +18,7 @@ $myLongi=doubleval($_POST['myLongi']);
 $sql = "SELECT id, user, title, txt, 
                lat, longi, ts
         FROM Posts
-        WHERE ABS(lat - '".$myLat."') < '".$dis."' AND ABS(longi - '".$myLongi."') < '".$dis."'
+        WHERE 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 mysql_select_db('RG');

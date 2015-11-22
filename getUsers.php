@@ -11,7 +11,7 @@ if(! $conn )
 }
 
 $sql = 'SELECT user, pass, photo
-        FROM users';
+        FROM USERS';
 
 mysql_select_db('RG');
 $retval = mysql_query( $sql, $conn );
