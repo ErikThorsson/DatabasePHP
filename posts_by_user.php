@@ -1,6 +1,7 @@
 <?php
 $dbhost = 'localhost';
 $dbuser = 'root';
+//$dbpass = $_POST['pass'];
 $dbpass = 'eko';
 $DB = "RG";
 
@@ -10,11 +11,13 @@ if(! $conn )
   die('Could not connect: ' . mysql_error());
 }
 
-$id= $_POST['id']; 
+$userN=$_POST['user'];
+$userN="Dan";
 
-$sql = "SELECT id, user, txt, ts
-        FROM Replies
-        WHERE post_id = $id
+$sql = "SELECT id, user, title, txt, 
+               lat, longi, ts
+        FROM Posts
+        WHERE '".$userN."' = user
         ";
 
 mysql_select_db('RG');
@@ -30,4 +33,3 @@ while($e=mysql_fetch_assoc($retval))
 
 print(json_encode($output));
 ?> 
-

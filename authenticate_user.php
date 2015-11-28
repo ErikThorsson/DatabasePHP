@@ -12,6 +12,7 @@ if(! $conn )
 
 $user = $_POST['user'];
 $userPass = $_POST['userPass'];
+$userPass = substr(md5($userPass), 0, 16);
 
 $sql = "SELECT user, pass, photo
         FROM USERS

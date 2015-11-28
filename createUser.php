@@ -2,8 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$pass = $_POST['pass'];
-//$pass = "eko";
+$pass = "eko";
 $DB = "RG";
 
 // Create connection
@@ -19,7 +18,8 @@ $userPass = $_POST['userPass'];
 //$user = "Freddy";
 //$userPass = "a";
 $hash = md5($user + "Capsicum annuum");
-$insert = "('$user','$userPass', '$hash')";
+$pHash = md5($userPass);
+$insert = "('$user','$pHash', '$hash')";
 
 $sql = "INSERT INTO USERS(user, pass, photo)
 VALUES $insert";

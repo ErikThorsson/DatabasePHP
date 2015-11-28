@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$pass = $_POST['pass'];
+$pass = "eko";
 $DB = "RG";
 
 // Create connection

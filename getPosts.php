@@ -1,7 +1,7 @@
 <?php
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbpass = $_POST['pass'];
+$dbpass = "eko";
 $DB = "RG";
 
 $conn = mysql_connect($dbhost, $dbuser, $dbpass, $DB);

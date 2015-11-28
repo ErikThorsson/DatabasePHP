@@ -1,41 +1,53 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
 
 public class RG_DB_tests {
-	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
+	public static void main(String[] args) throws MalformedURLException, IOException, ParseException, org.json.simple.parser.ParseException{
 	RG_DB_tests r = new RG_DB_tests();
 
-	//r.newPost("('Erik' ,'random', \"?\", '50.5', '67.0')");
-	//ArrayList<post> rs = r.getPosts();
-	//r.deletePost("13");
+	//r.newPost("('Freddy' ,'random', \"?\", '50.5', '67.0')");
+	//String pS = r.getPosts();
+	//r.deletePost("21");
 	
-	//r.newReply("('5', 'Douglas Adams', \"oh that's just a horse in the bathroom\")");  
-	//ArrayList<reply> l = r.getReplies(5);
-	//r.deleteReply("1", "5");
+	//r.newReply("('3', 'Douglas Adams', \"oh that's just a horse in the bathroom\")");  
+	//String l = r.getReplies(3);
+	//r.deleteReply("3", "5");
 	
-	ArrayList<post> near = r.getRadius(6000, 0, 0);
+	//String near = r.getRadius(6000, 0, 0);
 	
-	//user u = r.getUser("Batman", "foo");
-	//r.authenUser(u.user, u.pass);
-	//r.authenUser("Larry David", "curbed");
-	//r.newUser("Batman", "foo");
+	//String s = r.getUser("a", "b");
+	r.authenUser("a", "b");
+	//r.newUser("a", "b");
 	//r.deleteUser("Batman");
 	}
 	
+	public String readInputStream(URLConnection con) throws IOException {
+		InputStream in = con.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		StringBuilder result = new StringBuilder();
+		String line;
+		while((line = reader.readLine()) != null) {
+		    result.append(line);
+		}
+		return result.toString();
+	}
 	public RG_DB_tests() {}
 	
+	/**
+	 * Takes in the post parameters : username, post title, text, latitude, longitude to create a post on the server
+	 * @param s
+	 */
 	public void newPost(String s) {
-		String pass = "eko";
 			 try {
 				    // open a connection to the site
 				    URL url = new URL("http://45.55.44.240/DatabasePHP/newPost.php");
@@ -44,7 +56,7 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("insert="+s + "&pass="+ pass);
+				    ps.print("insert="+ s);
 				 
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();
@@ -59,8 +71,12 @@ public class RG_DB_tests {
 				    }
 	}
 	
-	public ArrayList<post> getPosts() {
-		String pass = "eko";
+	/**
+	 * Returns the JSON string of posts
+	 * @return
+	 * @throws org.json.simple.parser.ParseException 
+	 */
+	public String getPosts() {
 		 try {
 			    // open a connection to the site
 			    URL url = new URL("http://45.55.44.240/DatabasePHP/getPosts.php");
@@ -68,23 +84,11 @@ public class RG_DB_tests {
 			    // activate the output
 			    con.setDoOutput(true);
 			    PrintStream ps = new PrintStream(con.getOutputStream());
-			    // send your parameters to your site
-			    ps.print("pass="+pass);
-			 
-			    // we have to get the input stream in order to actually send the request
-			    String st = IOUtils.toString(con.getInputStream());
-				//System.out.println(st);
-			 
-				ArrayList<post> list = postsParse(st);
-				//System.out.println(list.size());
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i).id + ", " + list.get(i).user + ", " +list.get(i).title + ", " +list.get(i).text 
-							+ ", " +list.get(i).latitude + ", " +list.get(i).longitude + ", " +list.get(i).time_stamp);
-				
-			    // close the print stream
+				String s = readInputStream(con);
+			    System.out.println(s);
 			    ps.close();	
-			    		
-			    return list;
+			    
+			    return s;
 			    
 			    } catch (MalformedURLException e) {
 			        e.printStackTrace();
@@ -94,9 +98,11 @@ public class RG_DB_tests {
 	return null;
 	}
 	
-	
+	/**
+	 * Deletes post with given id
+	 * @param s
+	 */
 	public void deletePost(String s) {
-		String pass = "eko";
 			 try {
 				    // open a connection to the site
 				    URL url = new URL("http://45.55.44.240/DatabasePHP/deletePost.php");
@@ -105,10 +111,9 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("delete="+s + "&pass="+ pass);
+				    ps.print("delete="+ s);
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();
-				    // close the print stream
 				    ps.close();
 				    } catch (MalformedURLException e) {
 				        e.printStackTrace();
@@ -118,9 +123,12 @@ public class RG_DB_tests {
 				    }
 	}
 	
-	
-	public void deleteReply(String s, String s2) {
-		String pass = "eko";
+	/**
+	 * deletes replies with postID, replyID
+	 * @param postID
+	 * @param replyID
+	 */
+	public void deleteReply(String postID, String replyID) {
 			 try {
 				    // open a connection to the site
 				    URL url = new URL("http://45.55.44.240/DatabasePHP/deleteReply.php");
@@ -129,10 +137,9 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("delete="+s + "&pid="+ s2 + "&pass="+ pass);
+				    ps.print("delete="+ replyID + "&pid="+ postID);
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();
-				    // close the print stream
 				    ps.close();
 				    } catch (MalformedURLException e) {
 				        e.printStackTrace();
@@ -142,9 +149,11 @@ public class RG_DB_tests {
 				    }
 	}
 	
-	
+	/**
+	 * new Reply with parameters: postID, user txt
+	 * @param s
+	 */
 	public void newReply(String s) {
-		String pass = "eko";
 		
 			 try {
 				    // open a connection to the site
@@ -154,7 +163,6 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("&pass="+ pass);
 				    ps.print("&insert="+ s);
 				 
 				    // we have to get the input stream in order to actually send the request
@@ -169,8 +177,8 @@ public class RG_DB_tests {
 				    }
 	}
 	
+
 	public void newUser(String user, String userPass){
-		String pass = "eko";
 		String insert = "('" + user + "', '" + userPass +"')";  
 		
 			 try {
@@ -181,7 +189,6 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("&pass="+ pass);
 				    ps.print("&user="+ user);
 				    ps.print("&userPass="+ userPass);
 				    ps.print("&insert="+ insert);
@@ -199,7 +206,6 @@ public class RG_DB_tests {
 	}
 	
 	public void deleteUser(String s) {
-		String pass = "eko";
 			 try {
 				    // open a connection to the site
 				    URL url = new URL("http://45.55.44.240/DatabasePHP/deleteUser.php");
@@ -208,7 +214,7 @@ public class RG_DB_tests {
 				    con.setDoOutput(true);
 				    PrintStream ps = new PrintStream(con.getOutputStream());
 				    // send your parameters to your site
-				    ps.print("delete="+ s + "&pass="+ pass);
+				    ps.print("delete="+ s);
 				    // we have to get the input stream in order to actually send the request
 				    con.getInputStream();
 				    // close the print stream
@@ -221,7 +227,12 @@ public class RG_DB_tests {
 				    }
 	}
 	
-	public ArrayList<reply> getReplies(int id) {
+	/**
+	 * get replies form given postID
+	 * @param id
+	 * @return
+	 */
+	public String getReplies(int id) {
 
 		 try {
 			    // open a connection to the site
@@ -234,18 +245,11 @@ public class RG_DB_tests {
 			    ps.print("id="+id);
 			 
 			    // we have to get the input stream in order to actually send the request
-			    String st = IOUtils.toString(con.getInputStream());
-				//System.out.println(st);
+				String s = readInputStream(con);
+				System.out.println(s);
 			 
-				//System.out.println(s);
-				ArrayList<reply> list = repliesParse(st);
-				//System.out.println(list.size());
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i).user + ", " +list.get(i).txt + ", " + list.get(i).time_stamp);
-				
-			    // close the print stream
 			    ps.close();					 
-			    return list;
+			    return s;
 			    
 			    } catch (MalformedURLException e) {
 			        e.printStackTrace();
@@ -255,8 +259,15 @@ public class RG_DB_tests {
 	return null;
 	}
 	
-	public ArrayList<post> getRadius(double dis, double lat, double longi) throws IOException {
-		String s;
+	/**
+	 * returns posts within given distance, from your latitude, longitude
+	 * @param dis
+	 * @param lat
+	 * @param longi
+	 * @return
+	 * @throws IOException
+	 */
+	public String getRadius(double dis, double lat, double longi) throws IOException {
 		 try {
 			    // open a connection to the site
 			    URL url = new URL("http://45.55.44.240/DatabasePHP/selectRadius.php");
@@ -270,16 +281,12 @@ public class RG_DB_tests {
 			    ps.print("&myLongi="+ longi);
 			 
 			    // we have to get the input stream in order to actually send the request
-			    s = IOUtils.toString(con.getInputStream());
+				String s = readInputStream(con);
 				System.out.println(s);
 				
-				ArrayList<post> list = radiusParse(s);
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i).id + ", " + list.get(i).user + ", " +list.get(i).title + ", " +list.get(i).text 
-							+ ", " +list.get(i).latitude + ", " +list.get(i).longitude + ", " +list.get(i).time_stamp);
-			    // close the print stream
+
 			    ps.close();
-				return list;
+				return s;
 
 			    } catch (MalformedURLException e) {
 			        e.printStackTrace();
@@ -289,10 +296,17 @@ public class RG_DB_tests {
 	return null;
 	}
 	
-	public user getUser(String user, String userPass) throws IOException {
+	/**
+	 * get user info given his name, pass. Only gives the photo hash name for now.
+	 * @param user
+	 * @param userPass
+	 * @return
+	 * @throws IOException
+	 */
+	public String getUser(String user, String userPass) throws IOException {
 		 try {
 			    // open a connection to the site
-			    URL url = new URL("http://45.55.44.240/DatabasePHP/AuthenticateUser.php");
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/getUserData.php");
 			    URLConnection con = url.openConnection();
 			    // activate the output
 			    con.setDoOutput(true);
@@ -302,18 +316,10 @@ public class RG_DB_tests {
 			    ps.print("&userPass="+userPass);
 
 			    // we have to get the input stream in order to actually send the request
-			    String s = IOUtils.toString(con.getInputStream());
-				//System.out.println(s);
+				String s = readInputStream(con);
+				System.out.println(s);
 			 
-				ArrayList<user> list = userParse(s);
-				//System.out.println(list.size());
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i).user + "," + list.get(i).pass + ", " + list.get(i).photo);
-				
-			    // close the print stream
-			    ps.close();	
-			    user u = new user(list.get(0).user, list.get(0).pass, list.get(0).photo);
-			    return u;
+				return s;
 			    
 			    } catch (MalformedURLException e) {
 			        e.printStackTrace();
@@ -323,6 +329,13 @@ public class RG_DB_tests {
 	return null;
 	}
 	
+	/**
+	 * returns boolean for user
+	 * @param user
+	 * @param userPass
+	 * @return
+	 * @throws IOException
+	 */
 	public String authenUser(String user, String userPass) throws IOException {
 		 try {
 			    // open a connection to the site
@@ -336,7 +349,7 @@ public class RG_DB_tests {
 			    ps.print("&userPass="+userPass);
 
 			    // we have to get the input stream in order to actually send the request
-			    String s = IOUtils.toString(con.getInputStream());
+				String s = readInputStream(con);
 				System.out.println(s);
 				
 			    // close the print stream
@@ -349,191 +362,5 @@ public class RG_DB_tests {
 			        e.printStackTrace();
 			    }
 	return null;
-	}
-	
-	public ArrayList postsParse(String s) {
-		ArrayList<post> list = new ArrayList<post>(); //to store post objects
-		s = s.replace("[", ""); //split unnecessary chars out
-		s = s.replace("]", "");
-		s = s.replace("{", "");
-		String[] st = s.split("}");
-		
-		for(int i=0; i<st.length -1;i++) {
-			Pattern p = Pattern.compile("\"([^\"]*)\""); //split by double quotation marks
-			Matcher m = p.matcher(st[i]);
-			
-			int counter = 0;
-			post po = null;
-			if(counter == 0) //only make a new object every 8 lines
-			{
-			po = new post();
-			list.add(po);
-			}	
-			
-			while (m.find()) { //loop through every split
-				counter++;
-			  if(counter == 2)
-			  {
-				  po.id = Integer.parseInt(m.group(1));
-			  }
-			  if(counter == 4)
-			  {
-				  po.user = m.group(1);
-			  }
-			  if(counter == 6)
-			  {
-				  po.title = m.group(1);
-			  }
-			  if(counter == 8) 
-			  {
-				  po.text = m.group(1);
-			  }
-			  if(counter == 10) 
-			  {
-				  po.latitude = Double.parseDouble(m.group(1));
-			  }
-			  if(counter == 12) 
-			  {
-				  po.longitude = Double.parseDouble(m.group(1));
-			  }
-			  if(counter == 14) 
-			  {
-				  po.time_stamp = m.group(1);
-			  	  counter = 0; //reset for next group
-			  }
-			}
-		}
-	    return list;
-	}
-	
-	public ArrayList repliesParse(String s) {
-		ArrayList<reply> list = new ArrayList<reply>(); //to store post objects
-		s = s.replace("[", ""); //split unnecessary chars out
-		s = s.replace("]", "");
-		s = s.replace("{", "");
-		String[] st = s.split("}");
-		
-		for(int i=0; i<st.length -1;i++) {
-			Pattern p = Pattern.compile("\"([^\"]*)\""); //split by double quotation marks
-			Matcher m = p.matcher(st[i]);
-			int counter = 0;
-			reply r = null;
-			if(counter == 0) //only make a new object every 8 lines
-			{
-			r = new reply();
-			list.add(r);
-			}
-			
-			
-			while (m.find()) {
-				counter++;
-			  if(counter == 2)
-			  {
-				  r.user = m.group(1);
-			  }
-			  if(counter == 4)
-			  {
-				  r.txt = m.group(1);
-			  }
-			  if(counter == 6)
-			  {
-				  r.time_stamp = m.group(1);
-			  }
-			}
-		}
-	    return list;
-	}
-	
-	public ArrayList radiusParse(String s) {
-		ArrayList<post> list = new ArrayList<post>(); //to store post objects
-		s = s.replace("[", ""); //split unnecessary chars out
-		s = s.replace("]", "");
-		s = s.replace("{", "");
-		String[] st = s.split("}");
-		
-		for(int i=0; i<st.length -1;i++) {
-			Pattern p = Pattern.compile("\"([^\"]*)\""); //split by double quotation marks
-			Matcher m = p.matcher(st[i]);
-			
-			int counter = 0;
-			post po = null;
-			if(counter == 0) //only make a new object every 8 lines
-			{
-			po = new post();
-			list.add(po);
-			}	
-			
-			while (m.find()) { //loop through every split
-				counter++;
-			  if(counter == 2)
-			  {
-				  po.id = Integer.parseInt(m.group(1));
-			  }
-			  if(counter == 4)
-			  {
-				  po.user = m.group(1);
-			  }
-			  if(counter == 6)
-			  {
-				  po.title = m.group(1);
-			  }
-			  if(counter == 8) 
-			  {
-				  po.text = m.group(1);
-			  }
-			  if(counter == 10) 
-			  {
-				  po.latitude = Double.parseDouble(m.group(1));
-			  }
-			  if(counter == 12) 
-			  {
-				  po.longitude = Double.parseDouble(m.group(1));
-			  }
-			  if(counter == 14) 
-			  {
-				  po.time_stamp = m.group(1);
-			  	  counter = 0; //reset for next group
-			  }
-			}
-		}
-	    return list;
-	}
-	
-	public static ArrayList userParse(String s) {
-		ArrayList<user> list = new ArrayList<user>(); //to store post objects
-		s = s.replace("[", ""); //split unnecessary chars out
-		s = s.replace("]", "");
-		s = s.replace("{", "");
-		String[] st = s.split("}");
-		
-		for(int i=0; i<st.length -1;i++) {
-			Pattern p = Pattern.compile("\"([^\"]*)\""); //split by double quotation marks
-			Matcher m = p.matcher(st[i]);
-			int counter = 0;
-			user r = null;
-			if(counter == 0) //only make a new object every 8 lines
-			{
-			r = new user();
-			list.add(r);
-			}
-			
-			
-			while (m.find()) {
-				counter++;
-			  if(counter == 2)
-			  {
-				  r.user = m.group(1);
-			  }
-			  if(counter == 4)
-			  {
-				  r.pass = m.group(1);
-			  }
-			  if(counter == 6)
-			  {
-				  r.photo = m.group(1);
-			  }
-			}
-		}
-	    return list;
 	}
 }
