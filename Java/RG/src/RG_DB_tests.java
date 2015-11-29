@@ -7,9 +7,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
-
-import org.apache.commons.io.IOUtils;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class RG_DB_tests {
 	public static void main(String[] args) throws MalformedURLException, IOException, ParseException, org.json.simple.parser.ParseException{
@@ -26,9 +26,11 @@ public class RG_DB_tests {
 	//String near = r.getRadius(6000, 0, 0);
 	
 	//String s = r.getUser("a", "b");
-	r.authenUser("a", "b");
+	//r.authenUser("a", "b");
 	//r.newUser("a", "b");
 	//r.deleteUser("Batman");
+	
+	r.getTime(-1,-1, 6, -1 ,0,0);
 	}
 	
 	public String readInputStream(URLConnection con) throws IOException {
@@ -42,6 +44,63 @@ public class RG_DB_tests {
 		return result.toString();
 	}
 	public RG_DB_tests() {}
+	
+	/**
+	 * returns JSON posts based on time or time and radius. Parameters: hr, min, day, distance, lat, longi
+	 * Put -1 for each of the first 4 you won't be using. Min can only go up to 60.
+	 * @param hr
+	 * @param min
+	 * @param d
+	 * @param dis
+	 * @param lat
+	 * @param longi
+	 */
+	public void getTime(int hr, int min, int d, double dis, double lat, double longi) {
+		 try {
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/getTime.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    Date date = new Date();   // given date
+			    Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+			    calendar.setTime(date);   // assigns calendar to given date 
+			    int hour  = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+			    int minute  = calendar.get(Calendar.MINUTE); 
+			    int day = calendar.get(Calendar.DATE);
+			    String mode = "";
+			    if(hr != -1) {
+			    	mode = "hour";
+			    	hour = hour - hr;
+			    }
+			    if(min != -1)
+			    {
+			    	mode = "min";
+			    	if(minute - min < 0)
+			    	{
+			    		minute = 60 + (minute - min);
+			    		hour--;
+			    	}
+			    }
+			    if(d != -1)
+			    {
+			    	day = day - d;
+			    	mode = "day";
+			    }
+			    //System.out.println("mode is " + mode + " and the minute is " + (minute) + " and hour is " + (hour) + " and day is " + (day));
+			    ps.print("min="+ (minute) + "&hr="+ (hour) + "&day="+ (day) + "&mode="+ (mode));
+			    ps.print("&dis="+ dis);
+			    ps.print("&myLat="+ lat);
+			    ps.print("&myLongi="+ longi);
+				String s = readInputStream(con);
+			    System.out.println(s);
+			    ps.close();
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    
+			    }
+}
 	
 	/**
 	 * Takes in the post parameters : username, post title, text, latitude, longitude to create a post on the server
