@@ -7,12 +7,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RG_DB_tests {
-	public static void main(String[] args) throws MalformedURLException, IOException, ParseException, org.json.simple.parser.ParseException{
+	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
 	RG_DB_tests r = new RG_DB_tests();
 
 	//r.newPost("('Freddy' ,'random', \"?\", '50.5', '67.0')");
@@ -27,10 +30,17 @@ public class RG_DB_tests {
 	
 	//String s = r.getUser("a", "b");
 	//r.authenUser("a", "b");
-	//r.newUser("a", "b");
+	//r.newUser("Jack", "potato");
 	//r.deleteUser("Batman");
 	
-	r.getTime(-1,-1, 6, -1 ,0,0);
+	//r.getTime(-1,-1, 6, -1 ,0,0);
+	
+	//r.getUserProfilePicURL("Erik", "zzz");
+	}
+	
+	public void getUserProfilePicURL(String user, String pass) throws IOException {
+		ArrayList<user> l = userParse(getUser(user, pass));
+		System.out.println("http://45.55.44.240/userPics/" + l.get(0).photo + ".jpg");		
 	}
 	
 	public String readInputStream(URLConnection con) throws IOException {
@@ -46,7 +56,7 @@ public class RG_DB_tests {
 	public RG_DB_tests() {}
 	
 	/**
-	 * returns JSON posts based on time or time and radius. Parameters: hr, min, day, distance, lat, longi
+	 * returns JSON posts based on time or time and radius.
 	 * Put -1 for each of the first 4 you won't be using. Min can only go up to 60.
 	 * @param hr
 	 * @param min
@@ -143,7 +153,7 @@ public class RG_DB_tests {
 			    // activate the output
 			    con.setDoOutput(true);
 			    PrintStream ps = new PrintStream(con.getOutputStream());
-				String s = readInputStream(con);
+			    String s = readInputStream(con);
 			    System.out.println(s);
 			    ps.close();	
 			    
@@ -376,7 +386,7 @@ public class RG_DB_tests {
 
 			    // we have to get the input stream in order to actually send the request
 				String s = readInputStream(con);
-				System.out.println(s);
+				//System.out.println(s);
 			 
 				return s;
 			    
@@ -421,5 +431,43 @@ public class RG_DB_tests {
 			        e.printStackTrace();
 			    }
 	return null;
+	}
+	
+	public static ArrayList userParse(String s) {
+		ArrayList<user> list = new ArrayList<user>(); //to store post objects
+		s = s.replace("[", ""); //split unnecessary chars out
+		s = s.replace("]", "");
+		s = s.replace("{", "");
+		String[] st = s.split("}");
+		
+		for(int i=0; i<st.length -1;i++) {
+			Pattern p = Pattern.compile("\"([^\"]*)\""); //split by double quotation marks
+			Matcher m = p.matcher(st[i]);
+			int counter = 0;
+			user r = null;
+			if(counter == 0) //only make a new object every 8 lines
+			{
+			r = new user();
+			list.add(r);
+			}
+			
+			
+			while (m.find()) {
+				counter++;
+			  if(counter == 2)
+			  {
+				  r.user = m.group(1);
+			  }
+			  if(counter == 4)
+			  {
+				  r.pass = m.group(1);
+			  }
+			  if(counter == 6)
+			  {
+				  r.photo = m.group(1);
+			  }
+			}
+		}
+	    return list;
 	}
 }
