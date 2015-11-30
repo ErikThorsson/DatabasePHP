@@ -23,6 +23,7 @@ public class RG_DB_tests {
 	//r.deletePost("21");
 	
 	//r.newReply("('3', 'Douglas Adams', \"oh that's just a horse in the bathroom\")");  
+	//r.newReply("('14', 'Erik', \"Oh god my hands...\")");  
 	//String l = r.getReplies(3);
 	//r.deleteReply("3", "5");
 	
@@ -36,6 +37,8 @@ public class RG_DB_tests {
 	//r.getTime(-1,-1, 6, -1 ,0,0);
 	
 	//r.getUserProfilePicURL("Erik", "zzz");
+	r.postByUser("Erik");
+	//r.repliesByUser("Erik");
 	}
 	
 	public void getUserProfilePicURL(String user, String pass) throws IOException {
@@ -432,6 +435,48 @@ public class RG_DB_tests {
 			    }
 	return null;
 	}
+	
+	public String postByUser(String user) throws IOException {
+		 try {
+			    // open a connection to the site
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/posts_by_user.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    ps.print("user="+user);
+				String s = readInputStream(con);
+				System.out.println(s);
+			    ps.close();					 
+			    return s;
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    }
+	return null;
+	}
+	
+	public String repliesByUser(String user) throws IOException {
+		 try {
+			    // open a connection to the site
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/replies_by_user.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    ps.print("user="+user);
+				String s = readInputStream(con);
+				System.out.println(s);
+			    ps.close();					 
+			    return s;
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    }
+	return null;
+	}
+	
+	
 	
 	public static ArrayList userParse(String s) {
 		ArrayList<user> list = new ArrayList<user>(); //to store post objects
