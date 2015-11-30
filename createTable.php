@@ -11,13 +11,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "CREATE TABLE Posts (
+$sql = "CREATE TABLE POSTS (
 id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 user VARCHAR(16) NOT NULL,
-title VARCHAR(100) NOT NULL,
-txt VARCHAR(500) NOT NULL,
-lat FLOAT(8),
-longi FLOAT(8),
+content VARCHAR(500) NOT NULL,
+lat FLOAT(16),
+lng FLOAT(16),
 ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 

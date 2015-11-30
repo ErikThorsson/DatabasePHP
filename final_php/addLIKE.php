@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $insert=$_POST['insert'];
 
-$sql = "INSERT INTO POSTS(user, content, lat, lng)
+$sql = "INSERT INTO LIKES(POST_ID, USER)
 VALUES $insert";
 
 if ($conn->query($sql) === TRUE) {
@@ -22,5 +22,5 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-exit();  // exit without auto_append_file
+exit();  
 ?>

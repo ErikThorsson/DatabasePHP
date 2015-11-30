@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $delete=$_POST['delete'];
 
-$sql = "DELETE FROM Posts
+$sql = "DELETE FROM POSTS
 WHERE $delete = id
 ";
 

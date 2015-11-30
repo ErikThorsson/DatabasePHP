@@ -1,7 +1,7 @@
 <?php
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbpass = 'eko';
+$dbpass = "eko";
 $DB = "RG";
 
 $conn = mysql_connect($dbhost, $dbuser, $dbpass, $DB);
@@ -10,13 +10,11 @@ if(! $conn )
   die('Could not connect: ' . mysql_error());
 }
 
-$user = $_POST['user'];
-$userPass = substr(md5($userPass), 0, 16);
+$id=$_POST['id'];
 
-
-$sql = "SELECT photo
-        FROM USERS
-        WHERE '".$user."' like user
+$sql = "SELECT USER        
+		FROM LIKES
+		WHERE POST_ID = '".$id."'
         ";
 
 mysql_select_db('RG');

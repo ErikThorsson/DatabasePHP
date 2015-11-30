@@ -18,9 +18,9 @@ public class RG_DB_tests {
 	public static void main(String[] args) throws MalformedURLException, IOException, ParseException{
 	RG_DB_tests r = new RG_DB_tests();
 
-	//r.newPost("('Freddy' ,'random', \"?\", '50.5', '67.0')");
+	//r.newPost("('Freddy', \"?\", '33.7510001', '-84.3858811')");
 	//String pS = r.getPosts();
-	//r.deletePost("21");
+	//r.deletePost("1");
 	
 	//r.newReply("('3', 'Douglas Adams', \"oh that's just a horse in the bathroom\")");  
 	//r.newReply("('14', 'Erik', \"Oh god my hands...\")");  
@@ -29,20 +29,23 @@ public class RG_DB_tests {
 	
 	//String near = r.getRadius(6000, 0, 0);
 	
-	//String s = r.getUser("a", "b");
-	//r.authenUser("a", "b");
-	//r.newUser("Jack", "potato");
+	//r.authenUser("Erik", "zzz");
+	//r.newUser("Bill", "potato");
 	//r.deleteUser("Batman");
 	
 	//r.getTime(-1,-1, 6, -1 ,0,0);
 	
-	//r.getUserProfilePicURL("Erik", "zzz");
-	r.postByUser("Erik");
+	//r.getUserProfilePicURL("Erik");
+	//r.postByUser("Freddy");
 	//r.repliesByUser("Erik");
+	
+	r.LIKEME("1", "Edd");
+	r.getLIKES("1");
+
 	}
 	
-	public void getUserProfilePicURL(String user, String pass) throws IOException {
-		ArrayList<user> l = userParse(getUser(user, pass));
+	public void getUserProfilePicURL(String user) throws IOException {
+		ArrayList<user> l = userParse(getUser(user));
 		System.out.println("http://45.55.44.240/userPics/" + l.get(0).photo + ".jpg");		
 	}
 	
@@ -375,7 +378,7 @@ public class RG_DB_tests {
 	 * @return
 	 * @throws IOException
 	 */
-	public String getUser(String user, String userPass) throws IOException {
+	public String getUser(String user) throws IOException {
 		 try {
 			    // open a connection to the site
 			    URL url = new URL("http://45.55.44.240/DatabasePHP/getUserData.php");
@@ -385,11 +388,9 @@ public class RG_DB_tests {
 			    PrintStream ps = new PrintStream(con.getOutputStream());
 			    // send your parameters to your site
 			    ps.print("user="+user);
-			    ps.print("&userPass="+userPass);
-
 			    // we have to get the input stream in order to actually send the request
 				String s = readInputStream(con);
-				//System.out.println(s);
+				System.out.println(s);
 			 
 				return s;
 			    
@@ -476,7 +477,45 @@ public class RG_DB_tests {
 	return null;
 	}
 	
+	/**
+	 * this method is for user self validation purposes. 
+	 * @param s
+	 */
+	public void LIKEME(String id, String user) {
+		 try {
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/addLIKE.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    String insert = "('"+ id + "' , '"+ user + "')";
+			    ps.print("insert="+ insert);
+			    con.getInputStream();			 
+			    ps.close();
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    
+			    }
+}
 	
+	public void getLIKES(String id) {
+		 try {
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/getLIKES.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    ps.print("id="+ id);
+			    String s = readInputStream(con);
+				System.out.println(s);
+				ps.close();
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    
+			    }
+}
 	
 	public static ArrayList userParse(String s) {
 		ArrayList<user> list = new ArrayList<user>(); //to store post objects

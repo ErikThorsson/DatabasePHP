@@ -15,10 +15,10 @@ $myLat=doubleval($_POST['myLat']);
 $myLongi=doubleval($_POST['myLongi']);
 
 
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
-        WHERE 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
+        WHERE 69 * haversine(lat,lng,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 mysql_select_db('RG');

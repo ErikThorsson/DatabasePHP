@@ -15,6 +15,7 @@ $id= $_POST['id'];
 $sql = "SELECT id, user, txt, ts
         FROM Replies
         WHERE post_id = $id
+        ORDER BY id ASC
         ";
 
 mysql_select_db('RG');

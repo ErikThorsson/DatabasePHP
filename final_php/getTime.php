@@ -21,25 +21,25 @@ $myLongi=doubleval($_POST['myLongi']);
 if($dis == -1) {
 
 if($mode === "hour") {
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
         WHERE HOUR(ts) >= '".$hr."' AND DAY(ts) >= '".$day."'
         ";
 
 } else if($mode === "min") {
 
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
         WHERE MINUTE(ts) >= '".$min."' AND HOUR(ts) >= '".$hr."'AND DAY(ts) >= '".$day."' 
         ";
 
 } else {
 
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
         WHERE DAY(ts) >= '".$day."'
         ";	
 }
@@ -47,25 +47,25 @@ $sql = "SELECT id, user, title, txt,
 } else {
 
 if($mode === "hour") {
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
         FROM Posts
         WHERE HOUR(ts) >= '".$hr."' AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 } else if($mode === "min") {
 
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
         WHERE MINUTE(ts) >= '".$min."' AND HOUR(ts) >= '".$hr."'AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 } else {
 
-$sql = "SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts
+$sql = "SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS
         WHERE DAY(ts) >= '".$day."'AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";	
 	}	

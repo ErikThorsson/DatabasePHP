@@ -10,9 +10,9 @@ if(! $conn )
   die('Could not connect: ' . mysql_error());
 }
 
-$sql = 'SELECT id, user, title, txt, 
-               lat, longi, ts
-        FROM Posts';
+$sql = 'SELECT id, user, content, 
+               lat, lng, ts
+        FROM POSTS';
 
 mysql_select_db('RG');
 $retval = mysql_query( $sql, $conn );

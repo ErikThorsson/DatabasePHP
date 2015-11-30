@@ -12,8 +12,8 @@ if(! $conn )
 
 $user=$_POST['user'];
 
-$sql = "SELECT title, id
-        FROM Posts
+$sql = "SELECT content, id
+        FROM POSTS
         WHERE user like '".$user."'
         ";
 
