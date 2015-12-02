@@ -24,29 +24,40 @@ public class RG_DB_tests {
 	
 	//r.newReply("('3', 'Douglas Adams', \"oh that's just a horse in the bathroom\")");  
 	//r.newReply("('14', 'Erik', \"Oh god my hands...\")");  
+	
 	//String l = r.getReplies(3);
+	/*[{"id":"6","user":"Douglas Adams","txt":"oh that's just a horse in the bathroom","ts":"2015-11-28 16:37:18"},
+	{"id":"7","user":"Douglas Adams","txt":"oh that's just a horse in the bathroom","ts":"2015-11-28 16:41:42"}] 
+	*/
+	
 	//r.deleteReply("3", "5");
 	
 	//String near = r.getRadius(6000, 0, 0);
+	/*
+	 * [{"id":"2","user":"Freddy","content":"?","lat":"33.751","lng":"-84.3859","ts":"2015-11-29 21:23:37"}
+	 * ,{"id":"3","user":"Freddy","content":"?","lat":"33.751","lng":"-84.3859","ts":"2015-12-01 19:38:12"}] 
+	*/
 	
 	//r.authenUser("Erik", "zzz");
+	//output is BOOLEAN
+	
 	//r.newUser("Bill", "potato");
 	//r.deleteUser("Batman");
 	
-	//r.getTime(-1,-1, 6, -1 ,0,0);
+	//r.getTime(-1,-1, -1, 6000 ,0,0);
 	
-	//r.getUserProfilePicURL("Erik");
+	//r.getUser("Erik");
+	/*
+	 * [{"photo":"cfcd208495d565ef66e7dff9f98764da"}] 
+	 */
+	
 	//r.postByUser("Freddy");
 	//r.repliesByUser("Erik");
 	
-	r.LIKEME("1", "Edd");
-	r.getLIKES("1");
-
-	}
+	//r.LIKEME("1", "Fred");
 	
-	public void getUserProfilePicURL(String user) throws IOException {
-		ArrayList<user> l = userParse(getUser(user));
-		System.out.println("http://45.55.44.240/userPics/" + l.get(0).photo + ".jpg");		
+	//r.getLIKES("1");
+	//[{"USER":"Fred"}] 
 	}
 	
 	public String readInputStream(URLConnection con) throws IOException {
@@ -500,6 +511,24 @@ public class RG_DB_tests {
 }
 	
 	public void getLIKES(String id) {
+		 try {
+			    URL url = new URL("http://45.55.44.240/DatabasePHP/getLIKES.php");
+			    URLConnection con = url.openConnection();
+			    con.setDoOutput(true);
+			    PrintStream ps = new PrintStream(con.getOutputStream());
+			    ps.print("id="+ id);
+			    String s = readInputStream(con);
+				System.out.println(s);
+				ps.close();
+			    } catch (MalformedURLException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    
+			    }
+}
+	
+	public void like_EXIST(String id) {
 		 try {
 			    URL url = new URL("http://45.55.44.240/DatabasePHP/getLIKES.php");
 			    URLConnection con = url.openConnection();

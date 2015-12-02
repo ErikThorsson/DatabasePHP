@@ -50,7 +50,7 @@ if($mode === "hour") {
 $sql = "SELECT id, user, content, 
                lat, lng, ts
         FROM Posts
-        WHERE HOUR(ts) >= '".$hr."' AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
+        WHERE HOUR(ts) >= '".$hr."' AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,lng,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 } else if($mode === "min") {
@@ -58,7 +58,7 @@ $sql = "SELECT id, user, content,
 $sql = "SELECT id, user, content, 
                lat, lng, ts
         FROM POSTS
-        WHERE MINUTE(ts) >= '".$min."' AND HOUR(ts) >= '".$hr."'AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
+        WHERE MINUTE(ts) >= '".$min."' AND HOUR(ts) >= '".$hr."'AND DAY(ts) >= '".$day."' AND 69 * haversine(lat,lng,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";
 
 } else {
@@ -66,7 +66,7 @@ $sql = "SELECT id, user, content,
 $sql = "SELECT id, user, content, 
                lat, lng, ts
         FROM POSTS
-        WHERE DAY(ts) >= '".$day."'AND 69 * haversine(lat,longi,'".$myLat."', '".$myLongi."') < '".$dis."' 
+        WHERE DAY(ts) >= '".$day."'AND 69 * haversine(lat,lng,'".$myLat."', '".$myLongi."') < '".$dis."' 
         ";	
 	}	
 }

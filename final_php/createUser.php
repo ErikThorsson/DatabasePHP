@@ -15,8 +15,6 @@ if ($conn->connect_error) {
 $user = $_POST['user'];
 $userPass = $_POST['userPass'];
 
-//$user = "Freddy";
-//$userPass = "a";
 $hash = md5($user."Capsicum annuum");
 $pHash = md5($userPass);
 $insert = "('$user','$pHash', '$hash')";
